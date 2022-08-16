@@ -21,7 +21,7 @@ oauth2_scheme = OAuth2PasswordBearer(tokenUrl="/project/this/token")
 SECRET_KEY = "Enter very secret key here"
 
 
-async def auth_user(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)) -> Project:
+async def auth_project(db: Session = Depends(get_db), token: str = Depends(oauth2_scheme)) -> Project:
     project = verify_token(db, token)
     if not project:
         raise HTTPException(status_code=400, detail="Invalid token")

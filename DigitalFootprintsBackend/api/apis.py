@@ -6,7 +6,6 @@ from pydantic import BaseModel
 from DigitalFootprintsBackend import models
 from DigitalFootprintsBackend.crud import crud_apis
 from DigitalFootprintsBackend.database import engine, get_db
-from DigitalFootprintsBackend.models import TiktokVideo
 
 models.Base.metadata.create_all(bind=engine)
 app_apis = APIRouter(prefix="/apis", tags=["apis"])

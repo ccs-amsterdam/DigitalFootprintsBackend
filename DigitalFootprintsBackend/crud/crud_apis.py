@@ -4,7 +4,7 @@ from sqlalchemy import true
 
 from sqlalchemy.orm import Session
 
-from DigitalFootprintsBackend.models import TiktokVideo
+from DigitalFootprintsBackend.models import Transformer
 
 from typing import List
 
