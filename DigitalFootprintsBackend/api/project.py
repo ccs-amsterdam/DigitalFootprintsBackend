@@ -63,7 +63,7 @@ def get_project(project: str):
     return {"hey": "hi!",
             "name": project}
 
-@app_project.post("/{project}/publicdata", status_code=204)
+@app_project.post("/{project}/publicdata", status_code=200)
 def set_publicdata(project: str,
                    submission_id: str = Body(None, description='the submission id'),
                    data: dict = Body({}, description='A list of dictionaries with the keys "item" and "score"'),
@@ -79,5 +79,4 @@ def set_publicdata(project: str,
 def get_publicdata(project: str,
                    db: Session = Depends(get_db)): 
     data = crud_project.get_publicdata(db, project, 0)
-    print(data)
     return(data)
