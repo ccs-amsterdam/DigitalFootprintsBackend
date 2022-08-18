@@ -1,5 +1,5 @@
 from fastapi import APIRouter, HTTPException, status, Response
-from fastapi.params import Body, Depends
+from fastapi.params import Body, Depends, Query
 from fastapi.security import OAuth2PasswordRequestForm
 from sqlalchemy.orm import Session
 from typing import List
@@ -77,6 +77,7 @@ def set_publicdata(project: str,
 
 @app_project.get("/{project}/publicdata", status_code=200)
 def get_publicdata(project: str,
+                   updated: int = Query(0, description="Last time updated page"),
                    db: Session = Depends(get_db)): 
-    data = crud_project.get_publicdata(db, project, 0)
-    return(data)
+    data, modified, updated = crud_project.get_publicdata(db, project, updated)
+    return({"data": data, "modified": modified, "updated": updated})

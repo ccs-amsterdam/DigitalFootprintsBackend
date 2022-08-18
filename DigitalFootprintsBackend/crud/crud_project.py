@@ -59,13 +59,15 @@ def set_publicdata(db: Session, project: str, submission_id: str, data: List[dic
 def get_publicdata(db: Session, project: str, updated: Optional[int]): 
     project_id = get_project_id(db, project)
 
-    if updated is not None:
-        lastupdate = db.query(func.max(PublicData.modified).label('modified')).where(PublicData.project == project_id).first()
+    lastupdate = db.query(func.max(PublicData.modified).label('modified')).where(PublicData.project == project_id).first()
+    
+    modified = lastupdate.modified if lastupdate is not None else None
+    if updated is not None and modified is not None:
         if lastupdate.modified <= updated: 
-            return(None)
+            return {}, modified, False
 
     pd = db.query(PublicData).where(PublicData.project == project_id).all()
     data = [r.publicdata for r in pd]
     random.shuffle(data)
-    return data
+    return data, modified, True
  
